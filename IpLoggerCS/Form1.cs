@@ -15,16 +15,40 @@ namespace IpLoggerCS
         public static class Globals
         {
             public static string CurrentIpAddress = "999.999.999.999"; //create a new Ipaddress to be modified later
+            public static string PreviousIPAddress = "000.000.000.000";
+
         }
-            public Form1()
+        public Form1()
         {
             InitializeComponent();
-       //
+            //
         }
 
 
-        public static string GetPublicIP()
+        public static string ComparePublicIP()
+        { 
+            if (Globals.PreviousIPAddress == Globals.CurrentIpAddress)
+                {
+            
+                        MessageBox.Show("IP's Match - Previous IP :" + Globals.PreviousIPAddress + " | Current IP: " + Globals.CurrentIpAddress);
+                            return null;
+                }
+            else 
+                {
+                        MessageBox.Show("IP's DO NOT Match - Previous IP :" + Globals.PreviousIPAddress + " | Current IP: " + Globals.CurrentIpAddress);
+                            return null;
+
+                }
+
+
+        }
+
+
+
+                
+            public static string GetPublicIP()
         {
+            //Visit a site, and get the IP address we're currently using. and trim it up to a usable format.
             string url = "http://checkip.dyndns.org";
             System.Net.WebRequest req = System.Net.WebRequest.Create(url);
             System.Net.WebResponse resp = req.GetResponse();
@@ -48,6 +72,21 @@ namespace IpLoggerCS
         private void Form1_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            ComparePublicIP();
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            Globals.PreviousIPAddress = Globals.CurrentIpAddress;
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            Globals.PreviousIPAddress = "123.456.789";
         }
     }
 }
